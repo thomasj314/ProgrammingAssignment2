@@ -5,15 +5,15 @@
 
 makeCacheMatrix <- function(x = matrix()) {
   m <<- NULL
-  set <- function(y){
-    x <<- y
-    m <<- NULL
+  set <- function(y){            ##Define the set function to assign new values
+    x <<- y                      ##Move value to parent environment
+    m <<- NULL                   ##Reset m value
   }
   
-  get <- function () x
-  setInverse <- function(solve) m <<- solve
-  getInverse <- function() m
-  list(set = set, 
+  get <- function () x           ##Get the value of x
+  setInverse <- function(solve) m <<- solve   ##move value to parent environment
+  getInverse <- function() m     ##Get the value of m
+  list(set = set,                ##Define pointers
        get = get,
        setInverse = setInverse,
        getInverse = getInverse)
@@ -24,13 +24,13 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-  m <- x$getInverse()
-  if(!is.null(m)){
+  m <- x$getInverse()             ##Getting the value of inverse matrix
+  if(!is.null(m)){                ##Checking if m value has any of NA
     message("getting cached data")
     return(m)
   }
-  data <- x$get()
-  m <- solve(data,...)
-  x$setInverse(m)
-  m
+  data <- x$get()                 ##Get the value of x into data
+  m <- solve(data,...)            ##Making inverse value
+  x$setInverse(m)                 ##Setting the inverse value into x
+  m                               ##Display m value
 }
